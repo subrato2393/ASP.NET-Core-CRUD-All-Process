@@ -1,0 +1,39 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+<form asp-controller="Product" asp-action="Edit" method="post" class="form-horizontal">
+    <h1>Tag helper approach</h1>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="ProductName" class="col-md-2 control-label">Product Name</label>
+        <div class="col-md-10">
+            <input asp-for="ProductName" class="form-control" />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="col-md-2 control-label">Product Price</label>
+        <div class="col-md-10">
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Category Name</label>
+        <div class="col-md-10">
+            <select class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(ViewBag.Categories,"Id","CategoryName"))">
+                <option>--Select--</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-success" value="Update" />
+        </div>
+    </div>
+</form>
