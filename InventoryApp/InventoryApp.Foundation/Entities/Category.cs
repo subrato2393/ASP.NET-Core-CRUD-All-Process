@@ -1,5 +1,4 @@
 ﻿using InventoryApp.DataAccessLayer;
-using InventoryApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

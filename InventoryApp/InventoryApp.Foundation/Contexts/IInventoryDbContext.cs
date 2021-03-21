@@ -1,7 +1,7 @@
 ﻿using InventoryApp.Inventory.Foundation.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryApp.Contexts
+namespace InventoryApp.Inventory.Foundation.Contexts
 {
     public interface IInventoryDbContext
     {

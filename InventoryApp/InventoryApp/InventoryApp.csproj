@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InventoryApp.DataAccessLayer\InventoryApp.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\InventoryApp.Foundation\InventoryApp.Foundation.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,25 +1,14 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using InventoryApp.Contexts;
 using InventoryApp.Data;
-using InventoryApp.Inventory.Foundation.Entities;
-using InventoryApp.Inventory.Foundation.Repositories;
-using InventoryApp.Inventory.Foundation.Services;
-using InventoryApp.Inventory.Foundation.UnitOfWorks;
-using InventoryApp.Models;
+using InventoryApp.Inventory.Foundation.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace InventoryApp
 {
@@ -29,29 +18,12 @@ namespace InventoryApp
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         public static ILifetimeScope AutofacContainer { get; private set; }
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            var connectionStringName = "DefaultConnection";
-            var connectionString = Configuration.GetConnectionString(connectionStringName);
-            var migrationAssemblyName = typeof(Startup).Assembly.FullName;
-
-            builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
-            builder.RegisterType<ShoppingUnitOfWork>().As<IShoppingUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
-            builder.RegisterType<CategoryModel>().AsSelf();
-
-            //builder.RegisterType<InventoryDbContext>()
-            //     .WithParameter("connectionString", _connectionString)
-            //     .WithParameter("migrationAssemblyName", _migrationAssemblyName)
-            //     .InstancePerLifetimeScope();
-            //builder.RegisterModule(new LibraryModule(connectionString, migrationAssemblyName));
-            //builder.RegisterModule(new WebModule(connectionString, migrationAssemblyName));
-            //builder.RegisterModule(new FoundationModule(connectionString, migrationAssemblyName));
+            builder.RegisterModule(new WebModule());
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

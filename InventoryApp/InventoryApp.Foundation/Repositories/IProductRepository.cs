@@ -1,5 +1,5 @@
-﻿using InventoryApp.Contexts;
-using InventoryApp.DataAccessLayer;
+﻿using InventoryApp.DataAccessLayer;
+using InventoryApp.Inventory.Foundation.Contexts;
 using InventoryApp.Inventory.Foundation.Entities;
 using System;
 using System.Collections.Generic;

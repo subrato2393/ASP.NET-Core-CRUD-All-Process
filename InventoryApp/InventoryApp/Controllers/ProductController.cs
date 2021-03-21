@@ -1,4 +1,4 @@
-﻿using InventoryApp.Contexts;
+﻿using InventoryApp.Inventory.Foundation.Contexts;
 using InventoryApp.Inventory.Foundation.Entities;
 using InventoryApp.Models;
 using Microsoft.AspNetCore.Mvc;
