@@ -1,4 +1,5 @@
-﻿using InventoryApp.Inventory.Foundation.Contexts;
+﻿using Autofac;
+using InventoryApp.Inventory.Foundation.Contexts;
 using InventoryApp.Inventory.Foundation.Entities;
 using InventoryApp.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,51 +24,56 @@ namespace InventoryApp.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.Categories = _context.Categories.ToList();
+            var model = Startup.AutofacContainer.Resolve<CategoryModel>();
+            ViewBag.Categories = model.GetAllCategories();
             return View();
         }
 
         [HttpPost] 
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductModel model)
         {
-            _context.Add(product);
-            _context.SaveChanges();
-         
-            ViewBag.Categories = _context.Categories.ToList();
+            model.AddProduct();
             return RedirectToAction("GetAll");
         }
         public IActionResult GetAll()
         {
-           var model= _context.Products.ToList();
-            return View(model);
+            var model = Startup.AutofacContainer.Resolve<ProductModel>();
+            var products = model.GetAllProducts();
+            return View(products);
         }
         public IActionResult Edit(int id)
         {
-            var product=  _context.Products.Find(id);
-           
-            ViewBag.Categories = _context.Categories.ToList();
+            var categoryModel = Startup.AutofacContainer.Resolve<CategoryModel>();
+            var model = Startup.AutofacContainer.Resolve<ProductModel>();
+            var product = model.GetProductById(id);
+
+            ViewBag.Categories = categoryModel.GetAllCategories();
             return View(product);
         }
 
         [HttpPost]
         public IActionResult Edit(Product product)
         {
-            _context.Entry<Product>(product).State = EntityState.Modified;
-            _context.SaveChanges();
+            var categoryModel = Startup.AutofacContainer.Resolve<CategoryModel>();
+            var productModel = Startup.AutofacContainer.Resolve<ProductModel>();
+            productModel.UpdateProduct(product);
+
+            ViewBag.Categories = categoryModel.GetAllCategories();
             return RedirectToAction("GetAll");
         }
 
         public IActionResult Delete(int id)
         {
-            var model = _context.Products.Find(id);
-            return View(model);
+            var productModel = Startup.AutofacContainer.Resolve<ProductModel>();
+            var product = productModel.GetProductById(id);
+            return View(product);
         }
 
         [HttpPost]
         public IActionResult Delete(Product product)
         {
-            var model = _context.Products.Remove(product);
-            _context.SaveChanges();
+            var productModel = Startup.AutofacContainer.Resolve<ProductModel>();
+            productModel.RemoveProduct(product);
             return RedirectToAction("GetAll");
         }
     }

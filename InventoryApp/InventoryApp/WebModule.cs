@@ -20,7 +20,7 @@ namespace InventoryApp
             builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
             builder.RegisterType<CategoryModel>().AsSelf();
-
+            builder.RegisterType<ProductModel>().AsSelf();
             base.Load(builder);
         }
     }

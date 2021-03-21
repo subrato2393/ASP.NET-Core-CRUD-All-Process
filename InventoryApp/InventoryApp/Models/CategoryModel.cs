@@ -25,7 +25,7 @@ namespace InventoryApp.Models
         }
         public void AddCategory()
         {
-            _productService.AddProductToDatabase(new Category
+            _productService.AddCategoryToDatabase(new Category
             {
                 CategoryName = CategoryName,
             });
