@@ -1,4 +1,5 @@
 ﻿using InventoryApp.Contexts;
+using InventoryApp.Inventory.Foundation.Entities;
 using InventoryApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,11 +12,6 @@ namespace InventoryApp.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly InventoryDbContext _context;
-        public CategoryController(InventoryDbContext context)
-        {
-            _context = context;
-        }
         public IActionResult Index()
         {
             return View();
@@ -26,45 +22,47 @@ namespace InventoryApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category category)
+        public IActionResult Create(CategoryModel categoryModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                _context.SaveChanges();
+                categoryModel.AddCategory();
             }
             return RedirectToAction("GetAll");
         }
         public IActionResult GetAll()
         {
-            var categories= _context.Categories.ToList();
+            var model = new CategoryModel();
+            var categories = model.GetAllCategories();
             return View(categories);
         }
         public IActionResult Edit(int id)
         {
-            var model = _context.Categories.Find(id);
-            return View(model);
+            var model = new CategoryModel();
+            var category = model.GetCategoryById(id);
+            return View(category);
         }
-        
+
         [HttpPost]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(Category model)
         {
-            _context.Entry<Category>(category).State = EntityState.Modified;
-            _context.SaveChanges();
+            var categoryModel = new CategoryModel();
+            categoryModel.UpdateCategory(model);
             return RedirectToAction("GetAll");
         }
         public IActionResult Delete(int id)
         {
-            var model = _context.Categories.Find(id);
-            return View(model);
+            var categoryModel = new CategoryModel();
+            var category= categoryModel.GetCategoryById(id);
+            return View(category);
         }
 
-        [HttpPost] 
+        [HttpPost]
         public IActionResult Delete(Category category)
         {
-            var model = _context.Categories.Remove(category);
-            _context.SaveChanges();
-            return RedirectToAction("GetAll"); 
+            var categoryModel = new CategoryModel();
+            categoryModel.RemoveCategory(category);
+            return RedirectToAction("GetAll");
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using InventoryApp.DataAccessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace InventoryApp.Models
+namespace InventoryApp.Inventory.Foundation.Entities
 {
-    public class Product
+    public class Product:IEntity<int>
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

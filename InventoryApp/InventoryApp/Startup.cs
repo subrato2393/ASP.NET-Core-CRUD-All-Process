@@ -1,5 +1,12 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using InventoryApp.Contexts;
 using InventoryApp.Data;
+using InventoryApp.Inventory.Foundation.Entities;
+using InventoryApp.Inventory.Foundation.Repositories;
+using InventoryApp.Inventory.Foundation.Services;
+using InventoryApp.Inventory.Foundation.UnitOfWorks;
+using InventoryApp.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +32,27 @@ namespace InventoryApp
 
         public IConfiguration Configuration { get; }
 
+        public static ILifetimeScope AutofacContainer { get; private set; }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var connectionStringName = "DefaultConnection";
+            var connectionString = Configuration.GetConnectionString(connectionStringName);
+            var migrationAssemblyName = typeof(Startup).Assembly.FullName;
+
+            builder.RegisterType<ProductService>().As<IProductService>().InstancePerLifetimeScope();
+            builder.RegisterType<ShoppingUnitOfWork>().As<IShoppingUnitOfWork>().InstancePerLifetimeScope();
+            builder.RegisterType<CategoryRepository>().As<ICategoryRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CategoryModel>().AsSelf();
+
+            //builder.RegisterType<InventoryDbContext>()
+            //     .WithParameter("connectionString", _connectionString)
+            //     .WithParameter("migrationAssemblyName", _migrationAssemblyName)
+            //     .InstancePerLifetimeScope();
+            //builder.RegisterModule(new LibraryModule(connectionString, migrationAssemblyName));
+            //builder.RegisterModule(new WebModule(connectionString, migrationAssemblyName));
+            //builder.RegisterModule(new FoundationModule(connectionString, migrationAssemblyName));
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -44,6 +72,7 @@ namespace InventoryApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AutofacContainer = app.ApplicationServices.GetAutofacRoot();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

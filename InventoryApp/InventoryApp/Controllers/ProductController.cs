@@ -1,4 +1,5 @@
 ﻿using InventoryApp.Contexts;
+using InventoryApp.Inventory.Foundation.Entities;
 using InventoryApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

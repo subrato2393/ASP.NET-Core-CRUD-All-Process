@@ -1,4 +1,5 @@
-﻿using InventoryApp.Models;
+﻿using InventoryApp.Inventory.Foundation.Entities;
+using InventoryApp.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Contexts
 {
-    public class InventoryDbContext:DbContext
+    public class InventoryDbContext : DbContext, IInventoryDbContext
     {
         public InventoryDbContext(DbContextOptions<InventoryDbContext> options)
                : base(options)

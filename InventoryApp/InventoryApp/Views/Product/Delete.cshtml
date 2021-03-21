@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductModel
 @{
     ViewData["Title"] = "Delete";
 }
@@ -14,7 +14,7 @@
             <dd>@Model.Price</dd>
 
             <dt>Category Name</dt>
-            <dd>@Model.Category.CategoryName</dd>
+            <dd>@Model.CategoryName</dd>
         </dl>
         <input type="submit" value="Delete" class="btn btn-success" />
     </div>
