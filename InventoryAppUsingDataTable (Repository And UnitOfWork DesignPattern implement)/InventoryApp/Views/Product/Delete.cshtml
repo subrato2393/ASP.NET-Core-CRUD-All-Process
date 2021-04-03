@@ -1,0 +1,22 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+<form method="post">
+    <div>
+        <dl>
+            <dt>Product Name</dt>
+            <dd>@Model.ProductName</dd>
+
+            <dt>Price</dt>
+            <dd>@Model.Price</dd>
+
+            <dt>Category Name</dt>
+            <dd>@Model.CategoryName</dd>
+        </dl>
+        <input type="submit" value="Delete" class="btn btn-success" />
+    </div>
+</form>
+
