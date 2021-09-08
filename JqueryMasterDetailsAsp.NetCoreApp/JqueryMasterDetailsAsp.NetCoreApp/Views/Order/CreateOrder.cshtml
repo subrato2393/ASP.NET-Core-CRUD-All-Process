@@ -1,0 +1,115 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "CreateOrder";
+}
+<form asp-controller="Order" asp-action="CreateOrder" method="post">
+    <h1>CreateOrder</h1>
+    <div class="card">
+        <div class="card-header card-header ">
+            Order Item
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-5">
+                    <label asp-for="OrderNo"></label>
+                    <input asp-for="OrderNo" type="text" class="form-control" />
+                </div>
+                <div class="col-2">
+
+                </div>
+                <div class="col-5">
+                    <label asp-for="OrderDate"></label>
+                    <input asp-for="OrderDate" type="text" class="form-control" />
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-12">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" type="text" class="form-control"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            Order Details
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-5">
+                    <label for="Category">Category</label>
+                    <input id="Category" name="Category" type="text" class="form-control" />
+                </div>
+                <div class="col-2">
+
+                </div>
+                <div class="col-5">
+                    <label for="Item">Item</label>
+                    <input id="Item" type="text" class="form-control" />
+                </div>
+            </div><br />
+            <div class="row">
+                <div class="col-5">
+                    <label for="Quantity">Quantity</label>
+                    <input id="Quantity" name="Quantity" type="text" class="form-control" />
+                </div>
+                <div class="col-2">
+
+                </div>
+                <div class="col-5">
+                    <label for="Rate">Rate</label>
+                    <input id="Rate" type="text" class="form-control" />
+                </div>
+            </div>
+            <button type="button" id="btnAdd" class="btn btn-success float-right mt-1">Add</button>
+        </div>
+    </div>
+    <br />
+    <div>
+        <h4>Item Details</h4>
+        <table id="tblItemDetails" class="table table-bordere table-striped">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="mb-5">
+        <button type="submit" class="btn btn-primary float-right ml-2">Save</button>
+        <button type="submit" class="btn btn-primary float-right">Cancel</button>
+    </div>
+</form>
+@section scripts{
+    <script type="text/javascript">
+        $('#btnAdd').click(function () {
+            var index = 0;
+            var orderDetails ={
+                category: $('#Category').val(),
+                item: $('#Item').val(),
+                quantity: $('#Quantity').val(),
+                rate: $('#Rate').val()
+            };
+
+            var categoryCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Category' value=" + orderDetails.category + "/>'" + orderDetails.category + "'</td>";
+            var itemCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Item' value=" + orderDetails.item + " />'" + orderDetails.item + "'</td>";
+            var quantityCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Quantity' value=" + orderDetails.quantity + " />'" + orderDetails.quantity + "'</td>";
+            var rateCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Rate' value=" + orderDetails.rate + " />'" + orderDetails.rate + "'</td>";
+
+            // var row = `<tr> <td>${orderDetails.category}</td> <td>${orderDetails.item}</td> <td>${orderDetails.quantity}</td> <td>${orderDetails.rate}</td></tr>`;
+            var row = `<tr>${categoryCell + itemCell + quantityCell + rateCell}</tr>`;
+
+            $('#tblItemDetails').append(row);
+            console.log(orderDetails);
+            index++;
+        });
+    </script>
+}
+
