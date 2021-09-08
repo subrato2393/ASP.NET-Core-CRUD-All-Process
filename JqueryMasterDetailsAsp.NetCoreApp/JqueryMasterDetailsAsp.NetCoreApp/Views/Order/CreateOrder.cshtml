@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-5">
                     <label for="Category">Category</label>
-                    <input id="Category" name="Category" type="text" class="form-control" />
+                    <input id="Category" type="text" class="form-control" />
                 </div>
                 <div class="col-2">
 
@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-5">
                     <label for="Quantity">Quantity</label>
-                    <input id="Quantity" name="Quantity" type="text" class="form-control" />
+                    <input id="Quantity" type="text" class="form-control" />
                 </div>
                 <div class="col-2">
 
@@ -89,8 +89,8 @@
 </form>
 @section scripts{
     <script type="text/javascript">
+        var index = 0;
         $('#btnAdd').click(function () {
-            var index = 0;
             var orderDetails ={
                 category: $('#Category').val(),
                 item: $('#Item').val(),
@@ -98,18 +98,24 @@
                 rate: $('#Rate').val()
             };
 
-            var categoryCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Category' value=" + orderDetails.category + "/>'" + orderDetails.category + "'</td>";
-            var itemCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Item' value=" + orderDetails.item + " />'" + orderDetails.item + "'</td>";
-            var quantityCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Quantity' value=" + orderDetails.quantity + " />'" + orderDetails.quantity + "'</td>";
-            var rateCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Rate' value=" + orderDetails.rate + " />'" + orderDetails.rate + "'</td>";
+            var categoryCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Category' value=" + orderDetails.category + "/>" + orderDetails.category + "</td>";
+            var itemCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Item' value=" + orderDetails.item + " />" + orderDetails.item + "</td>";
+            var quantityCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Quantity' value=" + orderDetails.quantity + " />" + orderDetails.quantity + "</td>";
+            var rateCell = "<td><input type='hidden' name='OrderDetails[" + index + "].Rate' value=" + orderDetails.rate + " />" + orderDetails.rate + "</td>";
 
-            // var row = `<tr> <td>${orderDetails.category}</td> <td>${orderDetails.item}</td> <td>${orderDetails.quantity}</td> <td>${orderDetails.rate}</td></tr>`;
             var row = `<tr>${categoryCell + itemCell + quantityCell + rateCell}</tr>`;
 
             $('#tblItemDetails').append(row);
+            clearOrderDetailsTextBox();
             console.log(orderDetails);
             index++;
         });
+        function clearOrderDetailsTextBox() {
+           $('#Category').val(""),
+           $('#Item').val(""),
+           $('#Quantity').val(""),
+           $('#Rate').val("")
+        }
     </script>
 }
 
